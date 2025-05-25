@@ -27,10 +27,10 @@ FleetFlow is a role-based full-stack cab and driver management system developed 
 
 ##  Core Features
 
-| Role            | Capabilities                                                                 |
-|-----------------|-------------------------------------------------------------------------------|
+| Role            | Capabilities                                                                                  |
+|-----------------|-----------------------------------------------------------------------------------------------|
 | SUPER_VENDOR    | Signup/Login, Create Sub-vendor, Create Cab, Create Driver, View Dashboard, View Expired Docs |
-| SUB_VENDOR      | Signup/Login, Create Driver, View Assigned Drivers                            |
+| SUB_VENDOR      | Signup/Login, Create Driver, View Assigned Drivers                                            |
 
 ### Modules & Functionality
 - **JWT Auth**: Role-based secure endpoints with token validation
@@ -67,18 +67,17 @@ Expired Docs:
 
 
 
-## Folder Structure(src/main)
-com.fleetflow.fleetflow
-┣ config → Security Configuration (JWT filters, Role access)
-┣ controller → REST Controllers (Cab, Driver, Vendor)
-┣ dto → Request DTOs for API payload
-┣ entity → JPA Entities (User, Role, Vendor, Cab, Driver)
-┣ repository → Spring Data JPA Interfaces
-┣ security → JWT Utils, CustomUserDetailsService
-┣ service → Business logic (DriverService, VendorService, etc.)
-┣ FleetFlowApplication → Main application entry point
+## Folder Structure (src/main)
+com.fleetflow.fleetflow  
+┣ config → Security Configuration (JWT filters, Role access)  
+┣ controller → REST Controllers (Cab, Driver, Vendor)  
+┣ dto → Request DTOs for API payload  
+┣ entity → JPA Entities (User, Role, Vendor, Cab, Driver)  
+┣ repository → Spring Data JPA Interfaces  
+┣ security → JWT Utils, CustomUserDetailsService  
+┣ service → Business logic (DriverService, VendorService, etc.)  
+┣ FleetFlowApplication → Main application entry point  
 
-
-##Submitted By:
-Meghna Sharma
-GitHub: @Meghna0805
+## Submitted By:
+**Meghna Sharma**  
+GitHub: [@Meghna0805](https://github.com/Meghna0805)
