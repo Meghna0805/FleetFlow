@@ -37,7 +37,7 @@
         }
 
         const payload = JSON.parse(atob(token.split('.')[1]));
-        const parentUsername = payload.sub; // ✅ use username from token
+        const parentUsername = payload.sub;
 
         try {
             const response = await fetch("http://localhost:8080/api/vendors/create-sub-vendor", {

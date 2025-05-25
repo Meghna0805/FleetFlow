@@ -64,14 +64,14 @@ public class VendorController {
     @Autowired
     private CabRepository cabRepository;
 
-    // ✅ Create a vendor (Super/Sub)
+
     @PreAuthorize("hasAuthority('ROLE_SUPER_VENDOR')")
     @PostMapping("/create-sub-vendor")
     public Vendor createVendor(@RequestBody VendorRequest request) {
         return vendorService.createVendor(request);
     }
 
-    // ✅ List sub-vendors of a Super Vendor (by parent username)
+
     @PreAuthorize("hasAuthority('ROLE_SUPER_VENDOR')")
     @GetMapping("/sub-vendors/{superUsername}")
     public List<Vendor> getSubVendors(@PathVariable String superUsername) {

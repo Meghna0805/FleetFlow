@@ -6,5 +6,5 @@ import lombok.Data;
 public class PermissionRequest {
     private Long superVendorId;
     private Long subVendorId;
-    private String accessType;  // e.g., "VIEW_RIDES", "CREATE_VENDOR"
+    private String accessType;
 }

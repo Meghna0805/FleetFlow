@@ -10,5 +10,5 @@ import java.util.List;
 public interface DriverRepository extends JpaRepository<Driver, Long> {
     List<Driver> findByCabId(Long cabId);
     List<Driver> findByCabVendorId(Long vendorId);
-// optional for listing drivers by cab
+
 }

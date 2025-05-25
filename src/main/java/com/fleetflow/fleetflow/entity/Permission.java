@@ -15,7 +15,7 @@ public class Permission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String accessType; // e.g., VIEW_RIDES, CREATE_VENDOR
+    private String accessType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "super_vendor_id")

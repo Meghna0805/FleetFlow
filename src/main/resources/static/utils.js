@@ -1,11 +1,11 @@
 // utils.js
 
-// Helper: Get JWT token from storage
+
 function getToken() {
     return localStorage.getItem("token");
 }
 
-// Helper: Add auth header
+
 function authHeaders() {
     return {
         "Authorization": "Bearer " + getToken(),
@@ -13,7 +13,7 @@ function authHeaders() {
     };
 }
 
-// Optional: Decode token (basic payload)
+
 function getDecodedToken() {
     try {
         const token = getToken();

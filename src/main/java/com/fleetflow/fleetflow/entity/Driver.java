@@ -76,5 +76,5 @@ public class Driver {
     private Date rcExpiry;
 
     @Column(nullable = false)
-    private boolean available = true; // ✅ default available
+    private boolean available = true;
 }

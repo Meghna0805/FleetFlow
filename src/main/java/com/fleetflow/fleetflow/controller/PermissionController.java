@@ -15,19 +15,19 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-    // ✅ Assign permission (delegation)
+
     @PostMapping("/assign")
     public Permission assignPermission(@RequestBody PermissionRequest request) {
         return permissionService.assignPermission(request);
     }
 
-    // ✅ Get all permissions delegated by a SuperVendor
+
     @GetMapping("/super/{superVendorId}")
     public List<Permission> getBySuperVendor(@PathVariable Long superVendorId) {
         return permissionService.getPermissionsBySuperVendor(superVendorId);
     }
 
-    // ✅ Get all permissions granted to a SubVendor
+
     @GetMapping("/sub/{subVendorId}")
     public List<Permission> getBySubVendor(@PathVariable Long subVendorId) {
         return permissionService.getPermissionsBySubVendor(subVendorId);

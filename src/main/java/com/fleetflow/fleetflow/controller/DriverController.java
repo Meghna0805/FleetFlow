@@ -28,7 +28,7 @@ public class DriverController {
 
     private static final Logger logger = LoggerFactory.getLogger(DriverController.class);
 
-    // ✅ Create Driver
+
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_VENDOR', 'ROLE_SUB_VENDOR')")
     @PostMapping
     public ResponseEntity<?> createDriver(@Valid @RequestBody DriverRequest request) {
@@ -57,7 +57,7 @@ public class DriverController {
         return ResponseEntity.ok("Driver created with ID: " + savedDriver.getId());
     }
 
-    // ✅ Get All Drivers (Used by View My Drivers)
+
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_VENDOR', 'ROLE_SUB_VENDOR')")
     @GetMapping
     public ResponseEntity<List<Driver>> getAllDrivers() {
@@ -65,7 +65,7 @@ public class DriverController {
         return ResponseEntity.ok(driverRepository.findAll());
     }
 
-    // ✅ Get Drivers With Expired License/RC
+
     @PreAuthorize("hasAnyAuthority('ROLE_SUPER_VENDOR', 'ROLE_SUB_VENDOR')")
     @GetMapping("/expired-docs")
     public ResponseEntity<List<Driver>> getDriversWithExpiredDocs() {
@@ -73,7 +73,7 @@ public class DriverController {
         return ResponseEntity.ok(driverService.getExpiredDocumentDrivers());
     }
 
-    // ✅ Dashboard: Driver Availability Count
+
     @Cacheable("driverAvailability")
     @PreAuthorize("hasAuthority('ROLE_SUPER_VENDOR')")
     @GetMapping("/availability-count")
@@ -92,7 +92,7 @@ public class DriverController {
         return ResponseEntity.ok(response);
     }
 
-    // ✅ Dashboard: Flagged Expired License Drivers
+
     @PreAuthorize("hasAuthority('ROLE_SUPER_VENDOR')")
     @GetMapping("/flagged-license")
     public ResponseEntity<?> getDriversWithExpiredLicense() {

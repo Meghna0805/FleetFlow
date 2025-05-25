@@ -40,9 +40,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             jwt = authHeader.substring(7);
             try {
                 username = jwtUtil.extractUsername(jwt);
-                System.out.println("🟢 JWT Username extracted: " + username);
+                System.out.println(" JWT Username extracted: " + username);
             } catch (Exception e) {
-                System.out.println("🔴 Error parsing JWT: " + e.getMessage());
+                System.out.println(" Error parsing JWT: " + e.getMessage());
                 filterChain.doFilter(request, response);
                 return;
             }

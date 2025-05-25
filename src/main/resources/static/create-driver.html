@@ -45,7 +45,6 @@
     const payload = getDecodedToken();
     const username = payload.sub;
 
-    // ✅ Fetch cabs assigned to the vendor
     async function loadCabs() {
         try {
             const res = await fetch(`http://localhost:8080/api/cabs/vendor/${username}`, {

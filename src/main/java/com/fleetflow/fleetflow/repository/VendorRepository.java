@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface VendorRepository extends JpaRepository<Vendor, Long> {
     List<Vendor> findByParentVendorId(Long parentId);
 
-    // ✅ Needed for parentUsername logic
+
     Optional<Vendor> findByName(String name);
 }

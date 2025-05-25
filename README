@@ -1,0 +1,84 @@
+# 🚖 FleetFlow
+
+FleetFlow is a role-based full-stack cab and driver management system developed as part of the MoveInSync placement drive case study. It enables SUPER_VENDORs to manage their sub-vendors, onboard drivers, register cabs, monitor expired documents, and access live dashboard stats—all in a secure, scalable, and modular manner.
+
+---
+
+## Tech Stack
+
+### Backend
+- **Java 17**
+- **Spring Boot 3.5**
+- **Spring Security + JWT** (for authentication and authorization)
+- **Spring Data JPA** (for ORM)
+- **Hibernate Validator** (for server-side validation)
+- **MySQL** (relational database)
+
+### Frontend
+- **HTML**, **CSS**, **JavaScript** (Vanilla)
+- AJAX (Fetch API for HTTP calls)
+
+### Dev & Tools
+- IntelliJ IDEA
+- Git & GitHub
+- Postman (API Testing)
+
+---
+
+##  Core Features
+
+| Role            | Capabilities                                                                 |
+|-----------------|-------------------------------------------------------------------------------|
+| SUPER_VENDOR    | Signup/Login, Create Sub-vendor, Create Cab, Create Driver, View Dashboard, View Expired Docs |
+| SUB_VENDOR      | Signup/Login, Create Driver, View Assigned Drivers                            |
+
+### Modules & Functionality
+- **JWT Auth**: Role-based secure endpoints with token validation
+- **Vendor Hierarchy**: SUPER_VENDOR → SUB_VENDOR → Drivers/Cabs
+- **Cab Management**: Create & assign cabs under vendors
+- **Driver Management**: Add drivers, assign to cabs
+- **Dashboard**:
+  -Active/Inactive cab count
+  -Available/Unavailable driver count
+  -Expired document listing (License/RC)
+- **Document Expiry Monitor**: Automatic filtering of expired RC & license dates
+
+---
+
+##  Project Flow
+
+Signup/Login
+↓
+Role Detection via JWT
+↓
+SUPER_VENDOR Dashboard → Sub-Vendor Mgmt → Cab Creation → Driver Creation
+↓
+SUB_VENDOR Dashboard → Driver Creation
+↓
+Dashboard APIs:
+
+/cabs/active-inactive-count
+
+/drivers/availability-count
+↓
+Expired Docs:
+
+/drivers/expired-docs
+
+
+
+##Folder Structure(src/main)
+com.fleetflow.fleetflow
+┣ config → Security Configuration (JWT filters, Role access)
+┣ controller → REST Controllers (Cab, Driver, Vendor)
+┣ dto → Request DTOs for API payload
+┣ entity → JPA Entities (User, Role, Vendor, Cab, Driver)
+┣ repository → Spring Data JPA Interfaces
+┣ security → JWT Utils, CustomUserDetailsService
+┣ service → Business logic (DriverService, VendorService, etc.)
+┣ FleetFlowApplication → Main application entry point
+
+
+##Submitted By:
+Meghna Sharma
+GitHub: @Meghna0805

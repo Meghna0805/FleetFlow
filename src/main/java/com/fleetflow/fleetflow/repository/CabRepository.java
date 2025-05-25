@@ -12,5 +12,5 @@ public interface CabRepository extends JpaRepository<Cab, Long> {
 
     List<Cab> findByVendorId(Long vendorId);
 
-    List<Cab> findByVendorName(String name); // ✅ For fetching cabs by vendor username
+    List<Cab> findByVendorName(String name);
 }

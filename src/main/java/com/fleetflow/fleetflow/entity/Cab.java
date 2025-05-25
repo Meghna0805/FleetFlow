@@ -28,7 +28,7 @@ public class Cab {
     private FuelType fuelType;
 
     @Column(nullable = false)
-    private boolean active = true; // ✅ Default true — assuming new cab is active
+    private boolean active = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vendor_id")

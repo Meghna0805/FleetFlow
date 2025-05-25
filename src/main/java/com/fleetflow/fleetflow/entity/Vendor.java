@@ -21,9 +21,9 @@ public class Vendor {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private VendorType vendorType;  // SUPER_VENDOR / SUB_VENDOR
+    private VendorType vendorType;
 
-    // Only SUB_VENDOR will have parent reference
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
