@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Stats | FleetFlow</title>
+</head>
+<body>
+<h2>Dashboard Overview</h2>
+
+<div>
+    <h3>Cab Availability</h3>
+    <p id="cabStats">Loading...</p>
+</div>
+
+<div>
+    <h3>Driver Availability</h3>
+    <p id="driverStats">Loading...</p>
+</div>
+
+<div>
+    <h3>Drivers with Expired Licenses</h3>
+    <ul id="expiredDriversList"></ul>
+</div>
+
+<p id="err" style="color: red;"></p>
+
+<script src="utils.js"></script>
+<script>
+    const token = getToken();
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "login.html";
+    }
+
+    const headers = authHeaders();
+
+    async function loadDashboardStats() {
+        try {
+            const [cabRes, driverRes, expiredRes] = await Promise.all([
+                fetch('/api/cabs/active-inactive-count', { headers }),
+                fetch('/api/drivers/availability-count', { headers }),
+                fetch('/api/drivers/flagged-license', { headers }),
+            ]);
+
+            const cabData = await cabRes.json();
+            const driverData = await driverRes.json();
+            const expiredData = await expiredRes.json();
+
+            document.getElementById("cabStats").innerText =
+                `Active: ${cabData.active}, Inactive: ${cabData.inactive}`;
+
+            document.getElementById("driverStats").innerText =
+                `Available: ${driverData.available}, Unavailable: ${driverData.unavailable}`;
+
+            const expiredList = document.getElementById("expiredDriversList");
+            expiredList.innerHTML = "";
+
+            if (expiredData.length === 0) {
+                expiredList.innerHTML = "<li>No expired licenses</li>";
+            } else {
+                expiredData.forEach(driver => {
+                    const li = document.createElement("li");
+                    li.innerText = `${driver.name} - License Expired: ${driver.licenseExpiry}`;
+                    expiredList.appendChild(li);
+                });
+            }
+
+        } catch (error) {
+            document.getElementById("err").innerText = "Failed to load dashboard stats.";
+            console.error(error);
+        }
+    }
+
+    loadDashboardStats();
+</script>
+</body>
+</html>

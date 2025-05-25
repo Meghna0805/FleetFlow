@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Sub-Vendors | FleetFlow</title>
+</head>
+<body>
+<h2>Sub-Vendors List</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Vendor Type</th>
+    </tr>
+    </thead>
+    <tbody id="vendorTableBody">
+    </tbody>
+</table>
+
+<p id="error" style="color:red;"></p>
+
+<script src="utils.js"></script>
+<script>
+    const token = getToken();
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "login.html";
+    }
+
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        console.log("✅ Decoded JWT payload:", payload);
+
+        const username = payload.sub;
+
+        if (!username) {
+            document.getElementById("error").innerText = "Invalid token. Username missing.";
+        } else {
+            fetch(`http://localhost:8080/api/vendors/sub-vendors/${username}`, {
+                method: "GET",
+                headers: authHeaders()
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error("API Error");
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    const tableBody = document.getElementById("vendorTableBody");
+                    data.forEach(vendor => {
+                        const row = `
+                        <tr>
+                            <td>${vendor.id}</td>
+                            <td>${vendor.name}</td>
+                            <td>${vendor.vendorType}</td>
+                        </tr>
+                        `;
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById("error").innerText = "Failed to load sub-vendors.";
+                });
+        }
+    } catch (err) {
+        console.error("❌ Token decode error:", err);
+        document.getElementById("error").innerText = "Invalid token format.";
+    }
+</script>
+</body>
+</html>

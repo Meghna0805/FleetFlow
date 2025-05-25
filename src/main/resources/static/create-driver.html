@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Driver | FleetFlow</title>
+</head>
+<body>
+<h2>Create Driver</h2>
+
+<form id="driverForm">
+    <label>Name:</label><br>
+    <input type="text" id="name" required><br><br>
+
+    <label>Contact:</label><br>
+    <input type="text" id="contact" required><br><br>
+
+    <label>License Number:</label><br>
+    <input type="text" id="licenseNumber" required><br><br>
+
+    <label>License Expiry (yyyy-mm-dd):</label><br>
+    <input type="date" id="licenseExpiry" required><br><br>
+
+    <label>RC Number:</label><br>
+    <input type="text" id="rcNumber" required><br><br>
+
+    <label>RC Expiry (yyyy-mm-dd):</label><br>
+    <input type="date" id="rcExpiry" required><br><br>
+
+    <label>Select Cab:</label><br>
+    <select id="cabId" required></select><br><br>
+
+    <button type="submit">Create Driver</button>
+</form>
+
+<p id="msg" style="color:green;"></p>
+<p id="err" style="color:red;"></p>
+
+<script src="utils.js"></script>
+<script>
+    const token = getToken();
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "login.html";
+    }
+
+    const payload = getDecodedToken();
+    const username = payload.sub;
+
+    // ✅ Fetch cabs assigned to the vendor
+    async function loadCabs() {
+        try {
+            const res = await fetch(`http://localhost:8080/api/cabs/vendor/${username}`, {
+                headers: authHeaders()
+            });
+            const cabs = await res.json();
+            const cabSelect = document.getElementById("cabId");
+            cabs.forEach(cab => {
+                const option = document.createElement("option");
+                option.value = cab.id;
+                option.text = `${cab.registrationNumber} (ID: ${cab.id})`;
+                cabSelect.appendChild(option);
+            });
+        } catch (err) {
+            document.getElementById("err").innerText = "Failed to load cabs.";
+        }
+    }
+
+    loadCabs();
+
+    document.getElementById("driverForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const driverData = {
+            name: document.getElementById("name").value,
+            contact: document.getElementById("contact").value,
+            licenseNumber: document.getElementById("licenseNumber").value,
+            licenseExpiry: document.getElementById("licenseExpiry").value,
+            rcNumber: document.getElementById("rcNumber").value,
+            rcExpiry: document.getElementById("rcExpiry").value,
+            cabId: parseInt(document.getElementById("cabId").value)
+        };
+
+        try {
+            const res = await fetch("http://localhost:8080/api/drivers", {
+                method: "POST",
+                headers: authHeaders(),
+                body: JSON.stringify(driverData)
+            });
+
+            if (res.ok) {
+                document.getElementById("msg").innerText = "Driver created successfully!";
+                document.getElementById("err").innerText = "";
+            } else {
+                const err = await res.text();
+                document.getElementById("err").innerText = err;
+                document.getElementById("msg").innerText = "";
+            }
+        } catch (err) {
+            document.getElementById("err").innerText = "Something went wrong!";
+        }
+    });
+</script>
+</body>
+</html>

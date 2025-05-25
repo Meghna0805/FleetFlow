@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Expired Documents</title>
+</head>
+<body>
+<h2>Expired Driver Documents</h2>
+<ul id="expiredDrivers"></ul>
+
+<p id="err" style="color: red;"></p>
+
+<script src="utils.js"></script>
+<script>
+    async function fetchExpiredDocs() {
+        const token = getToken();
+        if (!token) {
+            alert("Please login first.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        try {
+            const res = await fetch("http://localhost:8080/api/drivers/expired-docs", {
+                method: "GET",
+                headers: authHeaders()
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                const list = document.getElementById("expiredDrivers");
+                list.innerHTML = "";
+
+                if (data.length === 0) {
+                    list.innerHTML = "<li>No expired documents found</li>";
+                    return;
+                }
+
+                data.forEach(driver => {
+                    const item = document.createElement("li");
+                    item.innerText = `Driver: ${driver.name} | License Expiry: ${driver.licenseExpiry} | RC Expiry: ${driver.rcExpiry}`;
+                    list.appendChild(item);
+                });
+
+            } else {
+                document.getElementById("err").innerText = "Failed to fetch expired documents.";
+            }
+
+        } catch (e) {
+            document.getElementById("err").innerText = "Error while fetching data.";
+        }
+    }
+
+    fetchExpiredDocs();
+</script>
+</body>
+</html>

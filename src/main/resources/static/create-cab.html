@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Cab | FleetFlow</title>
+</head>
+<body>
+<h2>Create Cab</h2>
+
+<form id="cabForm">
+    <label>Cab Number:</label><br>
+    <input type="text" id="cabNumber" required><br><br>
+
+    <label>Fuel Type:</label><br>
+    <select id="fuelType" required>
+        <option value="PETROL">PETROL</option>
+        <option value="DIESEL">DIESEL</option>
+        <option value="CNG">CNG</option>
+        <option value="ELECTRIC">ELECTRIC</option>
+    </select><br><br>
+
+    <label>Capacity:</label><br>
+    <input type="number" id="capacity" min="1" required><br><br>
+
+    <button type="submit">Create Cab</button>
+</form>
+
+<p id="msg" style="color: green;"></p>
+<p id="err" style="color: red;"></p>
+
+<script src="utils.js"></script>
+<script>
+    document.getElementById("cabForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const cabNumber = document.getElementById("cabNumber").value;
+        const fuelType = document.getElementById("fuelType").value;
+        const capacity = parseInt(document.getElementById("capacity").value);
+
+        const token = getToken();
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "login.html";
+            return;
+        }
+
+        const payload = getDecodedToken();
+        const vendorName = payload.sub; // JWT username
+
+        try {
+            const res = await fetch("http://localhost:8080/api/cabs", {
+                method: "POST",
+                headers: authHeaders(),
+                body: JSON.stringify({
+                    registrationNumber: cabNumber,
+                    fuelType: fuelType,
+                    capacity: capacity,
+                    vendorUsername: vendorName
+                })
+            });
+
+            if (res.ok) {
+                document.getElementById("msg").innerText = "Cab created successfully!";
+                document.getElementById("err").innerText = "";
+                document.getElementById("cabForm").reset();
+            } else {
+                const err = await res.text();
+                document.getElementById("err").innerText = err;
+                document.getElementById("msg").innerText = "";
+            }
+        } catch (err) {
+            document.getElementById("err").innerText = "Something went wrong!";
+        }
+    });
+</script>
+</body>
+</html>

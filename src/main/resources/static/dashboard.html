@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard | FleetFlow</title>
+</head>
+<body>
+<h2>Welcome to FleetFlow Dashboard</h2>
+<p id="welcomeMsg"></p>
+<p id="roleMsg" style="font-weight: bold;"></p>
+
+<div id="superVendorOptions" style="display: none;">
+    <h3>SUPER_VENDOR Options</h3>
+    <ul>
+        <li><a href="create-sub-vendor.html">Create Sub-Vendor</a></li>
+        <li><a href="view-sub-vendors.html">View Sub-Vendors</a></li>
+        <li><a href="create-cab.html">Create Cab</a></li>
+        <li><a href="create-driver.html">Create Driver</a></li>
+        <li><a href="view-expired-docs.html">View Expired Docs</a></li>
+        <li><a href="dashboard-stats.html">View Dashboard Stats</a></li>
+    </ul>
+</div>
+
+<div id="subVendorOptions" style="display: none;">
+    <h3>SUB_VENDOR Options</h3>
+    <ul>
+        <li><a href="create-driver.html">Create Driver</a></li>
+        <li><a href="view-my-drivers.html">View My Drivers</a></li>
+    </ul>
+</div>
+
+<script src="utils.js"></script>
+<script>
+    const token = localStorage.getItem("token");
+    if (!token) {
+        alert("Please login first!");
+        window.location.href = "login.html";
+    } else {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const username = payload.sub;
+        const roles = payload.roles;
+
+        document.getElementById("welcomeMsg").innerText = `Welcome, ${username}!`;
+        document.getElementById("roleMsg").innerText = `You are logged in as: ${roles.join(", ")}`;
+
+        if (roles.includes("ROLE_SUPER_VENDOR")) {
+            document.getElementById("superVendorOptions").style.display = "block";
+        }
+        if (roles.includes("ROLE_SUB_VENDOR")) {
+            document.getElementById("subVendorOptions").style.display = "block";
+        }
+    }
+</script>
+</body>
+</html>

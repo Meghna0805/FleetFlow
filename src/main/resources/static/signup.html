@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup | FleetFlow</title>
+</head>
+<body>
+<h2>Signup</h2>
+<form id="signupForm">
+    <label>Username:</label><br>
+    <input type="text" id="username" required><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" id="password" required><br><br>
+
+    <label>Select Role:</label><br>
+    <select id="role" required>
+        <option value="SUPER_VENDOR">SUPER_VENDOR</option>
+        <option value="SUB_VENDOR">SUB_VENDOR</option>
+    </select><br><br>
+
+    <button type="submit">Signup</button>
+</form>
+
+<p id="signupMsg" style="color: green;"></p>
+<p id="signupErr" style="color: red;"></p>
+
+<script>
+    document.getElementById("signupForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const role = document.getElementById("role").value;
+
+        try {
+            const response = await fetch("http://localhost:8080/api/auth/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username,
+                    password,
+                    roles: [role]
+                })
+            });
+
+            const text = await response.text();
+            let data = {};
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                // response wasn't valid JSON
+            }
+
+            if (response.ok) {
+                document.getElementById("signupMsg").innerText = "Signup successful! Redirecting to login...";
+                document.getElementById("signupErr").innerText = "";
+                setTimeout(() => window.location.href = "login.html", 2000);
+            } else {
+                document.getElementById("signupErr").innerText = data.message || "Signup failed!";
+                document.getElementById("signupMsg").innerText = "";
+            }
+
+        } catch (err) {
+            document.getElementById("signupErr").innerText = "Something went wrong!";
+        }
+    });
+</script>
+</body>
+</html>
