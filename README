@@ -1,12 +1,12 @@
-##FleetFlow
+#FleetFlow
 
 FleetFlow is a role-based full-stack cab and driver management system developed as part of the MoveInSync placement drive case study. It enables SUPER_VENDORs to manage their sub-vendors, onboard drivers, register cabs, monitor expired documents, and access live dashboard stats—all in a secure, scalable, and modular manner.
 
 ---
 
-## Tech Stack
+# Tech Stack
 
-### Backend
+# Backend
 - **Java 17**
 - **Spring Boot 3.5**
 - **Spring Security + JWT** (for authentication and authorization)
@@ -14,25 +14,25 @@ FleetFlow is a role-based full-stack cab and driver management system developed 
 - **Hibernate Validator** (for server-side validation)
 - **MySQL** (relational database)
 
-### Frontend
+# Frontend
 - **HTML**, **CSS**, **JavaScript** (Vanilla)
 - AJAX (Fetch API for HTTP calls)
 
-### Dev & Tools
+# Dev & Tools
 - IntelliJ IDEA
 - Git & GitHub
 - Postman (API Testing)
 
 ---
 
-##  Core Features
+#  Core Features
 
 | Role            | Capabilities                                                                                  |
 |-----------------|-----------------------------------------------------------------------------------------------|
 | SUPER_VENDOR    | Signup/Login, Create Sub-vendor, Create Cab, Create Driver, View Dashboard, View Expired Docs |
 | SUB_VENDOR      | Signup/Login, Create Driver, View Assigned Drivers                                            |
 
-### Modules & Functionality
+# Modules & Functionality
 - **JWT Auth**: Role-based secure endpoints with token validation
 - **Vendor Hierarchy**: SUPER_VENDOR → SUB_VENDOR → Drivers/Cabs
 - **Cab Management**: Create & assign cabs under vendors
@@ -45,7 +45,7 @@ FleetFlow is a role-based full-stack cab and driver management system developed 
 
 ---
 
-##  Project Flow
+#  Project Flow
 
 Signup/Login
 ↓
@@ -67,7 +67,7 @@ Expired Docs:
 
 
 
-## Folder Structure (src/main)
+# Folder Structure (src/main)
 com.fleetflow.fleetflow  
 ┣ config → Security Configuration (JWT filters, Role access)  
 ┣ controller → REST Controllers (Cab, Driver, Vendor)  
@@ -78,6 +78,6 @@ com.fleetflow.fleetflow
 ┣ service → Business logic (DriverService, VendorService, etc.)  
 ┣ FleetFlowApplication → Main application entry point  
 
-## Submitted By:
+# Submitted By:
 **Meghna Sharma**  
 GitHub: [@Meghna0805](https://github.com/Meghna0805)
